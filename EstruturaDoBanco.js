@@ -8,43 +8,100 @@ const sequelize = new Sequelize("gestao", "postgres", "postgres123", {
 sequelize.authenticate().then(() => console.log('Conectou!')).catch((erro) => console.log('Não conectou!'));
 
 const usuario = sequelize.define('Usuario', {
-    Nome: Sequelize.STRING,
-    Email: Sequelize.STRING,
-    Cidade: Sequelize.STRING,
-    Senha: Sequelize.STRING
+    Nome: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    Email: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    Cidade: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    Senha: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 });
 
 const cadastroDespesas = sequelize.define('CadastroDespesas', {
-    Nome: Sequelize.STRING,
-    Data: Sequelize.DATE,
-    Valor: Sequelize.DECIMAL,
-    Descricao: Sequelize.STRING
+    Nome:  {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    Data: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    Valor: {
+        type: Sequelize.DECIMAL,
+        allowNull: false
+    },
+    Descricao: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 });
 
 const cadastroReceitas = sequelize.define('CadastroReceitas', {
-    Nome: Sequelize.STRING,
-    Data: Sequelize.DATE,
-    Valor: Sequelize.DECIMAL,
-    Descricao: Sequelize.STRING
+    Nome: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    Data: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    Valor: {
+        type: Sequelize.DECIMAL,
+        allowNull: false
+    },
+    Descricao: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 });
 
 const tiposDespesas = sequelize.define('TiposDespesas', {
-    Nome: Sequelize.STRING
+    Nome: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 });
 
 const tiposReceitas = sequelize.define('TiposReceitas', {
-    Nome: Sequelize.STRING
+    Nome: {
+        type: Sequelize.STRING,
+        allowNull: false
+    }
 });
 
 const movimentacoesFinanceiras = sequelize.define('MovimentacoesFinanceiras', {
-    Tipo: Sequelize.ENUM('Entrada', 'Saida'),
-    Data: Sequelize.DATE,
-    Valor: Sequelize.DECIMAL
+    Tipo: {
+        type: Sequelize.ENUM('Entrada', 'Saida'),
+        allowNull: false
+    },
+    Data: {
+        type: Sequelize.DATE,
+        allowNull: false
+    },
+    Valor: {
+        type: Sequelize.DECIMAL,
+        allowNull: false
+    }
 });
 
 const conta = sequelize.define('Conta', {
-    Numero: Sequelize.STRING,
-    Saldo: Sequelize.DECIMAL
+    Numero: {
+        type: Sequelize.STRING,
+        allowNull: false
+    },
+    Saldo: {
+        type: Sequelize.DECIMAL,
+        allowNull: false
+    }
 });
 
 usuario.hasOne(conta);
@@ -66,4 +123,3 @@ sequelize.sync({ force: true })
   .catch(err => {
     console.error('Erro ao criar as tabelas:', err);
   });
-
