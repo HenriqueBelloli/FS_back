@@ -202,6 +202,145 @@ router.get('/get/contas/:id', async (req, res) => {
     }
 });
 
+//Listar as despesas de um usuário específico
+router.get('/get/despesas/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const despesas = await models.cadastroDespesas.findAll({
+            where: { UserId: userId },
+            include: [
+                { model: models.tiposDespesas },
+                { model: models.movimentacoesFinanceiras, where: { Tipo: 'Saida' } }
+            ]
+        });
+        res.status(200).json(despesas);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar despesas" });
+    }
+});
+
+//Listar as receitas de um usuário específico
+router.get('/get/receitas/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const receitas = await models.cadastroReceitas.findAll({
+            where: { UserId: userId },
+            include: [
+                { model: models.tiposReceitas },
+                { model: models.movimentacoesFinanceiras, where: { Tipo: 'Entrada' } }
+            ]
+        });
+        res.status(200).json(receitas);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar receitas" });
+    }
+});
+
+//Listar o saldo da conta de um usuário
+router.get('/get/saldo/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const conta = await models.conta.findOne({
+            where: { UserId: userId },
+            include: [{ model: models.usuario }]
+        });
+        res.status(200).json(conta);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar saldo da conta" });
+    }
+});
+
+//Listar todas as movimentações financeiras de um usuário
+router.get('/get/movimentacoes/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const movimentacoes = await models.movimentacoesFinanceiras.findAll({
+            where: { UserId: userId },
+            include: [
+                { model: models.cadastroDespesas, include: [{ model: models.tiposDespesas }] },
+                { model: models.cadastroReceitas, include: [{ model: models.tiposReceitas }] }
+            ]
+        });
+        res.status(200).json(movimentacoes);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar movimentações financeiras" });
+    }
+});
+
+//Listar todas as despesas de um tipo específico
+router.get('/get/despesas/tipo/:tipoDespesaId', async (req, res) => {
+    const { tipoDespesaId } = req.params;
+    try {
+        const despesas = await models.cadastroDespesas.findAll({
+            where: { TipoDespesaId: tipoDespesaId },
+            include: [
+                { model: models.tiposDespesas },
+                { model: models.movimentacoesFinanceiras, where: { Tipo: 'Saida' } }
+            ]
+        });
+        res.status(200).json(despesas);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar despesas por tipo" });
+    }
+});
+
+//Listar todas as despesas e receitas de um usuário em um período de tempo específico
+router.get('/get/movimentacoes/periodo/:userId/:dataInicial/:dataFinal', async (req, res) => {
+    const { userId, dataInicial, dataFinal } = req.params;
+    try {
+        const movimentacoes = await models.movimentacoesFinanceiras.findAll({
+            where: {
+                UserId: userId,
+                Data: { [models.Sequelize.Op.between]: [dataInicial, dataFinal] }
+            },
+            include: [
+                { model: models.cadastroDespesas, include: [{ model: models.tiposDespesas }] },
+                { model: models.cadastroReceitas, include: [{ model: models.tiposReceitas }] }
+            ],
+            order: [['Data', 'DESC']]
+        });
+        res.status(200).json(movimentacoes);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar movimentações financeiras por período" });
+    }
+});
+
+//Listar todas as despesas e receitas de um usuário com um determinado valor mínimo
+router.get('/get/movimentacoes/valor-minimo/:userId/:valorMinimo', async (req, res) => {
+    const { userId, valorMinimo } = req.params;
+    try {
+        const movimentacoes = await models.movimentacoesFinanceiras.findAll({
+            where: {
+                UserId: userId,
+                Valor: { [models.Sequelize.Op.gte]: valorMinimo }
+            },
+            include: [
+                { model: models.cadastroDespesas, include: [{ model: models.tiposDespesas }] },
+                { model: models.cadastroReceitas, include: [{ model: models.tiposReceitas }] }
+            ]
+        });
+        res.status(200).json(movimentacoes);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar movimentações financeiras com valor mínimo" });
+    }
+});
+
+//Listar todas as despesas de um usuário com informações detalhadas de suas categorias
+router.get('/get/despesas-categorias/:userId', async (req, res) => {
+    const { userId } = req.params;
+    try {
+        const despesas = await models.cadastroDespesas.findAll({
+            where: { UserId: userId },
+            include: [
+                { model: models.tiposDespesas }
+            ]
+        });
+        res.status(200).json(despesas);
+    } catch (err) {
+        res.status(500).json({ error: "Erro ao buscar despesas com categorias" });
+    }
+});
+
 //put
 
 router.put('/put/usuarios/:id', async (req, res) => {
