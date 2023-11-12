@@ -1,0 +1,541 @@
+{
+	"info": {
+		"_postman_id": "8f212c2e-55ce-4871-a1ed-fefda74f356f",
+		"name": "Gestão",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26212510"
+	},
+	"item": [
+		{
+			"name": "Conta",
+			"item": [
+				{
+					"name": "Criar conta",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\":\"teste\",\r\n    \"usuarioId\": 1,\r\n    \"saldo\": 0\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/contas",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar conta",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\":\"alterado\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/contas?id=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contas"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar conta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contas?id=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contas"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar conta",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/contas?id=1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"contas"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categoria",
+			"item": [
+				{
+					"name": "Criar categoria",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\":\"teste\",\r\n    \"usuarioId\": 1,\r\n    \"tipo\": 1\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/categorias",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar categoria",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"descricao\":\"alterado\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/categorias?id=6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categorias"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categorias?id=1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categorias"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar categoria",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/categorias?id=6",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"categorias"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "6"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuário",
+			"item": [
+				{
+					"name": "Criar usuário",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"teste\",\r\n    \"email\": \"teste@teste.com\",\r\n    \"senha\": \"1\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar usuário",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\":\"teste\",\r\n    \"email\": \"teste2@teste.com\",\r\n    \"senha\": \"1\"\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/usuarios?id=3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar usuário",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios?id=3",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar usuário",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/usuarios?id=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"usuarios"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Movimentação",
+			"item": [
+				{
+					"name": "Criar movimentação",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuarioId\": 1, \r\n    \"tipo\": 1, \r\n    \"descricao\": \"teste\",\r\n    \"data\": \"09/11/2023\",\r\n    \"valor\": 1,\r\n    \"contaId\": 1,\r\n    \"categoriaId\": 1\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/movimentacoes",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"movimentacoes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar movimentação",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"valor\": 100,\r\n    \"contaId\": 2\r\n    }"
+						},
+						"url": {
+							"raw": "{{baseURL}}/movimentacoes?id=1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"movimentacoes"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Consultar movimentação",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/movimentacoes?id=1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"movimentacoes"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "pesquisar movimentações",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/movimentacoes/search?idUsuario=1&tipo=1",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"movimentacoes",
+								"search"
+							],
+							"query": [
+								{
+									"key": "idUsuario",
+									"value": "1"
+								},
+								{
+									"key": "tipo",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar movimentação",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/movimentacoes?id=2",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"movimentacoes"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Status",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}\\status",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"status"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "token",
+			"value": "c5bd9007-112e-06a1-3128-8c0698914adb",
+			"type": "string"
+		},
+		{
+			"key": "baseURL",
+			"value": "localhost:8081",
+			"type": "string"
+		}
+	]
+}

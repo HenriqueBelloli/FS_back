@@ -1,0 +1,10 @@
+{
+   "trailingComma": "none",
+   "tabWidth": 2,
+   "semi": false,
+   "singleQuote": true,
+   "editor.formatOnSave": true,
+   "useTabs": false,
+   "function-parentheses": "avoid",
+   "printWidth": 100
+}
