@@ -9,4 +9,6 @@ router.route('').put(contentTypeCheck, controller.putCategoria)
 router.route('').get(controller.getCategoria)
 router.route('').delete(controller.deleteCategoria)
 
+router.route('/usuarioCategorias').get(controller.getCategoriasUsuario)
+
 module.exports = router

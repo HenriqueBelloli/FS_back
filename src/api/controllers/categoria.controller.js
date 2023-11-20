@@ -80,3 +80,22 @@ exports.deleteCategoria = async (req, res) => {
 
   return responses.sendResponse(res, 204, false, 'Categoria eliminada com sucesso.', null)
 }
+
+exports.getCategoriasUsuario = async (req, res) => {
+  const {usuarioId, tipo } = req.query
+
+  if (!usuarioId) {
+    return responses.sendResponse(res, 400, true, 'Usuário não informado.', null)
+  }
+
+  if (!tipo) {
+    return responses.sendResponse(res, 400, true, 'Tipo não informado.', null)
+  }
+
+  if (tipo != 1 && tipo != 2) {
+    return responses.sendResponse(res, 400, true, 'Tipo ' + tipo + ' não é válido.', null)
+  }
+
+  const result = await classCategoria.usuarioCategoriasCarregar(usuarioId, tipo)
+  return responses.sendResponse(res, 200, false, 'OK.', result)
+}

@@ -77,3 +77,10 @@ exports.categoriaDeletar = async (id) => {
     }
   })
 }
+exports.usuarioCategoriasCarregar = async (usuarioId, tipo) => {
+  const categorias = await db.Categoria.findAll({
+    where: { usuarioId: usuarioId, tipo: tipo },
+    attributes: ['id', 'descricao']
+  })
+  return categorias
+}
