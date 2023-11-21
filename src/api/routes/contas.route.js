@@ -9,4 +9,6 @@ router.route('').put(contentTypeCheck, controller.putConta)
 router.route('').get(controller.getConta)
 router.route('').delete(controller.deleteConta)
 
+router.route('/usuarioContas').get(controller.getContasUsuario)
+
 module.exports = router

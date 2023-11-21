@@ -64,3 +64,14 @@ exports.deleteConta = async (req, res) => {
 
   return responses.sendResponse(res, 204, false, 'Conta eliminada com sucesso.', null)
 }
+
+exports.getContasUsuario = async (req, res) => {
+  const {usuarioId } = req.query
+
+  if (!usuarioId) {
+    return responses.sendResponse(res, 400, true, 'Usuário não informado.', null)
+  }
+
+  const result = await classConta.usuarioCategoriasCarregar(usuarioId)
+  return responses.sendResponse(res, 200, false, 'OK.', result)
+}

@@ -15,7 +15,7 @@ const db = require('./config/db_sequelize')
 let server
 
 /* Sincroniza a estrutura do banco de dados*/
-syncBanco()
+//syncBanco()
 
 /* Inicia o servidor */
 server = app.listen(config.port, async () => {
