@@ -3,7 +3,11 @@ const config = require('./config')
 
 const sequelize = new Sequelize(config.server.dbName, config.server.user, config.server.password, {
   host: config.server.host,
-  dialect: 'postgres'
+  dialect: 'postgres',
+  dialectOptions: {
+    useUTC: false
+  },
+  timezone: '+03:00'
 })
 
 var db = {}

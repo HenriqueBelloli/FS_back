@@ -76,9 +76,9 @@ exports.deleteCategoria = async (req, res) => {
 }
 
 exports.getSearchMovimentacao = async (req, res) => {
-  const { idUsuario, tipo, periodo_inicial, periodo_final, contaId, categoriaId  } = req.query
+  const { usuarioId, tipo, periodo_inicial, periodo_final, contaId, categoriaId  } = req.query
 
-  if (!idUsuario) {
+  if (!usuarioId) {
     return responses.sendResponse(res, 400, true, 'Id do usuário não informado.', null)
   }
 
@@ -86,7 +86,7 @@ exports.getSearchMovimentacao = async (req, res) => {
     return responses.sendResponse(res, 400, true, 'Tipo de movimentação não informado.', null)
   }
 
-  const dados = {idUsuario, tipo, periodo_inicial, periodo_final, contaId, categoriaId}
+  const dados = {usuarioId, tipo, periodo_inicial, periodo_final, contaId, categoriaId}
 
   const result = await classMovimentacao.movimentacoesConsultar(dados)
   return responses.sendResponse(res, 200, false, 'OK.', result)

@@ -138,9 +138,9 @@ exports.movimentacaoDeletar = async (id) => {
 exports.movimentacoesConsultar = async (dados) => {
   let condicaoWhere = {}
 
-  condicaoWhere.usuarioId = dados.idUsuario
+  condicaoWhere.usuarioId = dados.usuarioId
   condicaoWhere.tipo = dados.tipo
-
+  
   if (dados.periodo_inicial && dados.periodo_final) {
     condicaoWhere.data = {
       [db.Sequelize.Op.between]: [dados.periodo_inicial, dados.periodo_final]
@@ -157,11 +157,11 @@ exports.movimentacoesConsultar = async (dados) => {
 
   const movimentacoes = await db.Movimentacao.findAll({
     where: condicaoWhere,
-    attributes: ['id', 'descricao', 'data', 'valor'],
+    attributes: ['id', 'descricao', 'data', 'valor', 'tipo'],
     include: [
       {
         model: db.Conta,
-        attributes: ['id', 'descricao'] ,
+        attributes: ['id', 'descricao'],
         as: 'conta'
       },
       {
