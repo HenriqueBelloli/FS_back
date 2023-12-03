@@ -98,37 +98,38 @@ exports.usuarioBalancoCarregar = async (dados) => {
   }
 
   // Consultar e somar o saldo das contas do usuário
-  const contasDoUsuario = await db.Conta.findAll({
-    attributes: ['saldo'],
-    where: { usuarioId: dados.usuarioId }
-  })
-
-  let totalSaldo = contasDoUsuario.reduce((total, conta) => total + conta.saldo, 0)
-  totalSaldo = parseFloat(totalSaldo)
+  const totalSaldo =
+    (await db.Conta.sum('saldo', {
+      where: {
+        usuarioId: dados.usuarioId
+      }
+    })) || 0
 
   const { periodo_inicial, periodo_final } = dados
 
   // Somar as receitas do período
-  const totalReceitas = await db.Movimentacao.sum('valor', {
-    where: {
-      usuarioId: dados.usuarioId,
-      tipo: 1,
-      data: {
-        [db.Sequelize.Op.between]: [periodo_inicial, periodo_final]
+  const totalReceitas =
+    (await db.Movimentacao.sum('valor', {
+      where: {
+        usuarioId: dados.usuarioId,
+        tipo: 1,
+        data: {
+          [db.Sequelize.Op.between]: [periodo_inicial, periodo_final]
+        }
       }
-    }
-  }) || 0
+    })) || 0
 
   // Somar as despesas do período
-  const totalDespesas = await db.Movimentacao.sum('valor', {
-    where: {
-      usuarioId: dados.usuarioId,
-      tipo: 2,
-      data: {
-        [db.Sequelize.Op.between]: [periodo_inicial, periodo_final]
+  const totalDespesas =
+    (await db.Movimentacao.sum('valor', {
+      where: {
+        usuarioId: dados.usuarioId,
+        tipo: 2,
+        data: {
+          [db.Sequelize.Op.between]: [periodo_inicial, periodo_final]
+        }
       }
-    }
-  }) || 0
+    })) || 0
 
   return {
     totalSaldo,

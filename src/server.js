@@ -74,12 +74,159 @@ async function syncBanco() {
         })
         .then((user) => {
           // Crie categorias
-          return db.Categoria.bulkCreate([
+          db.Categoria.bulkCreate([
             { tipo: 1, descricao: 'salário', usuarioId: user.id },
             { tipo: 1, descricao: 'mesada', usuarioId: user.id },
             { tipo: 2, descricao: 'alimentação', usuarioId: user.id },
             { tipo: 2, descricao: 'aluguel', usuarioId: user.id },
             { tipo: 2, descricao: 'energia elétrica', usuarioId: user.id }
+          ])
+          // Crie movimentacao
+          return db.Movimentacao.bulkCreate([
+            {
+              tipo: 1,
+              descricao: 'salário',
+              data: '2023-12-01',
+              valor: 1500,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 1
+            },
+            {
+              tipo: 1,
+              descricao: 'salário',
+              data: '2023-11-01',
+              valor: 1500,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 1
+            },
+            {
+              tipo: 1,
+              descricao: 'salário',
+              data: '2023-10-01',
+              valor: 1500,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 1
+            },
+            {
+              tipo: 1,
+              descricao: 'mesada',
+              data: '2023-12-01',
+              valor: 500,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 2
+            },
+            {
+              tipo: 1,
+              descricao: 'mesada',
+              data: '2023-11-07',
+              valor: 200,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 2
+            },
+            {
+              tipo: 1,
+              descricao: 'mesada',
+              data: '2023-10-05',
+              valor: 300,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 2
+            },
+            {
+              tipo: 2,
+              descricao: 'Mercado',
+              data: '2023-12-01',
+              valor: 50,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 3
+            },
+            {
+              tipo: 2,
+              descricao: 'Mercado',
+              data: '2023-12-01',
+              valor: 50,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 3
+            },
+            {
+              tipo: 2,
+              descricao: 'Mercado',
+              data: '2023-12-02',
+              valor: 80,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 3
+            },
+            {
+              tipo: 2,
+              descricao: 'Mercado',
+              data: '2023-12-03',
+              valor: 200,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 3
+            },
+            {
+              tipo: 2,
+              descricao: 'aluguel',
+              data: '2023-12-05',
+              valor: 700,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 4
+            },
+            {
+              tipo: 2,
+              descricao: 'aluguel',
+              data: '2023-11-07',
+              valor: 750,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 4
+            },
+            {
+              tipo: 2,
+              descricao: 'aluguel',
+              data: '2023-10-10',
+              valor: 715,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 4
+            },
+            {
+              tipo: 2,
+              descricao: 'COPEL',
+              data: '2023-12-10',
+              valor: 100,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 5
+            },
+            {
+              tipo: 2,
+              descricao: 'COPEL',
+              data: '2023-11-10',
+              valor: 150,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 5
+            },
+            {
+              tipo: 2,
+              descricao: 'COPEL',
+              data: '2023-10-10',
+              valor: 120,
+              usuarioId: user.id,
+              contaId: 1,
+              categoriaId: 5
+            }
           ])
         })
         .catch((error) => {
