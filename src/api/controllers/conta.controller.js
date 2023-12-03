@@ -72,6 +72,6 @@ exports.getContasUsuario = async (req, res) => {
     return responses.sendResponse(res, 400, true, 'Usuário não informado.', null)
   }
 
-  const result = await classConta.usuarioCategoriasCarregar(usuarioId)
+  const result = await classConta.usuarioContasCarregar(usuarioId)
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }

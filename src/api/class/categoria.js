@@ -80,7 +80,10 @@ exports.categoriaDeletar = async (id) => {
 exports.usuarioCategoriasCarregar = async (usuarioId, tipo) => {
   const categorias = await db.Categoria.findAll({
     where: { usuarioId: usuarioId, tipo: tipo },
-    attributes: ['id', 'descricao']
+    attributes: ['id', 'descricao'],
+    order: [
+      ['descricao', 'ASC'] // ASC para ordenação crescente, DESC para ordenação decrescente
+    ]
   })
   return categorias
 }

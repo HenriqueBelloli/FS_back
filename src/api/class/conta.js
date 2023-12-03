@@ -77,10 +77,13 @@ exports.contaDeletar = async (id) => {
   })
 }
 
-exports.usuarioCategoriasCarregar = async (usuarioId) => {
+exports.usuarioContasCarregar = async (usuarioId) => {
   const contas = await db.Conta.findAll({
-    where: { usuarioId: usuarioId},
-    attributes: ['id', 'descricao', 'saldo']
+    where: { usuarioId: usuarioId },
+    attributes: ['id', 'descricao', 'saldo'],
+    order: [
+      ['descricao', 'ASC'] // ASC para ordenação crescente, DESC para ordenação decrescente
+    ]
   })
   return contas
 }

@@ -169,6 +169,9 @@ exports.movimentacoesConsultar = async (dados) => {
         attributes: ['id', 'descricao'],
         as: 'categoria'
       }
+    ],
+    order: [
+      ['data', 'ASC'] // ASC para ordenação crescente, DESC para ordenação decrescente
     ]
   })
 
