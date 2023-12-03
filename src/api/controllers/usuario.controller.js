@@ -24,7 +24,13 @@ exports.putUsuario = async (req, res) => {
   const { nome, email, senha } = req.body
 
   if (!nome && !email && !senha) {
-    return responses.sendResponse(res, 400, true, 'Nenhum campo válido informado para atualização.', null)
+    return responses.sendResponse(
+      res,
+      400,
+      true,
+      'Nenhum campo válido informado para atualização.',
+      null
+    )
   }
 
   const dados = { id, nome, email, senha }
@@ -51,8 +57,19 @@ exports.deleteUsuario = async (req, res) => {
   if (!id) {
     return responses.sendResponse(res, 400, true, 'Id não informado.', null)
   }
-  
+
   await classUsuario.usuarioDeletar(id)
 
   return responses.sendResponse(res, 204, false, 'Usuário eliminado com sucesso.', null)
+}
+
+exports.getUsuarioBalance = async (req, res) => {
+  const { usuarioId, periodo_inicial, periodo_final } = req.query
+  if (!usuarioId) {
+    return responses.sendResponse(res, 400, true, 'Id não informado.', null)
+  }
+  const dados = {usuarioId, periodo_inicial, periodo_final}
+
+  const result = await classUsuario.usuarioBalancoCarregar(dados)
+  return responses.sendResponse(res, 200, false, 'OK.', result)
 }

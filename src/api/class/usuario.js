@@ -89,3 +89,50 @@ exports.usuarioDeletar = async (id) => {
     }
   })
 }
+
+exports.usuarioBalancoCarregar = async (dados) => {
+  const usuario = await db.Usuario.findByPk(dados.usuarioId)
+
+  if (!usuario) {
+    throw new APIError(404, 'Usuário não localizado', undefined)
+  }
+
+  // Consultar e somar o saldo das contas do usuário
+  const contasDoUsuario = await db.Conta.findAll({
+    attributes: ['saldo'],
+    where: { usuarioId: dados.usuarioId }
+  })
+
+  let totalSaldo = contasDoUsuario.reduce((total, conta) => total + conta.saldo, 0)
+  totalSaldo = parseFloat(totalSaldo)
+
+  const { periodo_inicial, periodo_final } = dados
+
+  // Somar as receitas do período
+  const totalReceitas = await db.Movimentacao.sum('valor', {
+    where: {
+      usuarioId: dados.usuarioId,
+      tipo: 1,
+      data: {
+        [db.Sequelize.Op.between]: [periodo_inicial, periodo_final]
+      }
+    }
+  }) || 0
+
+  // Somar as despesas do período
+  const totalDespesas = await db.Movimentacao.sum('valor', {
+    where: {
+      usuarioId: dados.usuarioId,
+      tipo: 2,
+      data: {
+        [db.Sequelize.Op.between]: [periodo_inicial, periodo_final]
+      }
+    }
+  }) || 0
+
+  return {
+    totalSaldo,
+    totalReceitas,
+    totalDespesas
+  }
+}
