@@ -15,7 +15,7 @@ const db = require('./config/db_sequelize')
 let server
 
 /* Sincroniza a estrutura do banco de dados*/
-//syncBanco()
+syncBanco()
 
 /* Inicia o servidor */
 server = app.listen(config.port, async () => {
@@ -55,7 +55,7 @@ async function syncBanco() {
   await db.sequelize
     .sync({ force: true })
     .then(() => {
-      logger.info('Conexao com banco de dados estabelecida e modelos sincronizados. Criando registros padrão...')
+      logger.info('Conexao com banco de dados estabelecida e sincronizadas. Criando registros padrão...')
 
       criarTriggers()
 
@@ -244,35 +244,37 @@ async function criarTriggers() {
     CREATE OR REPLACE FUNCTION atualizar_saldo_conta()
     RETURNS TRIGGER AS $$
     BEGIN
-
+  
       IF (TG_OP = 'INSERT') THEN
         UPDATE conta
-        SET saldo = saldo + NEW.valor
+        SET saldo = saldo + CASE WHEN NEW.tipo = 1 THEN NEW.valor ELSE -NEW.valor END
         WHERE id = NEW."contaId";
-
+  
       ELSIF (TG_OP = 'UPDATE') THEN
-
         IF OLD."contaId" != NEW."contaId" THEN
+          -- Subtrair o valor da conta antiga
           UPDATE conta
           SET saldo = saldo - OLD.valor
           WHERE id = OLD."contaId";
-
+    
+          -- Adicionar o valor à nova conta
           UPDATE conta
-          SET saldo = saldo + NEW.valor
+          SET saldo = saldo + CASE WHEN NEW.tipo = 1 THEN NEW.valor ELSE -NEW.valor END
           WHERE id = NEW."contaId";
-
         ELSE
+          -- Atualizar saldo na mesma conta
           UPDATE conta
-          SET saldo = saldo - OLD.valor + NEW.valor
+          SET saldo = saldo - OLD.valor + CASE WHEN NEW.tipo = 1 THEN NEW.valor ELSE -NEW.valor END
           WHERE id = NEW."contaId";
         END IF;
-
+  
       ELSIF (TG_OP = 'DELETE') THEN
+        -- Subtrair o valor da conta
         UPDATE conta
         SET saldo = saldo - OLD.valor
         WHERE id = OLD."contaId";
       END IF;
-
+  
       RETURN NEW;
       END;
     $$ LANGUAGE plpgsql;
