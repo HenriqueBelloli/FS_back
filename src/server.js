@@ -63,7 +63,7 @@ async function syncBanco() {
       db.Usuario.create({
         nome: 'user',
         email: 'user@email.com',
-        senha: '123'
+        senha: '$2a$10$kb.DP8m6gn4JW.i41w5vMe4fSivjd28kUtK08s88H4VFHGQeM99Ni'
       })
         .then((user) => {
           // Crie uma conta

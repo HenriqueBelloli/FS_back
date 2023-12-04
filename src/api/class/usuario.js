@@ -11,9 +11,17 @@ exports.usuarioCriar = async (dados) => {
     throw new APIError(400, 'E-mail já cadastrado.', undefined)
   }
 
+  //criptografa a senha
+  const bcrypt = require('bcryptjs')
+  dados.senha = bcrypt.hashSync(dados.senha, 10)
+
   const novoUsuario = await db.Usuario.create(dados)
 
-  return novoUsuario
+  return {
+    id: novoUsuario.id,
+    nome: novoUsuario.nome,
+    email: novoUsuario.email
+  }
 }
 
 exports.usuarioEditar = async (dados) => {
@@ -49,7 +57,9 @@ exports.usuarioEditar = async (dados) => {
   }
 
   if (dados.senha) {
-    dadosAtualizar.senha = dados.senha
+    //criptografa a senha
+    const bcrypt = require('bcryptjs')
+    dadosAtualizar.senha = bcrypt.hashSync(dados.senha, 10)
   }
 
   // Atualiza o registro
@@ -62,7 +72,11 @@ exports.usuarioEditar = async (dados) => {
   // Recarrega os dados do usuário atualizado
   const usuarioAtualizado = await db.Usuario.findByPk(dados.id)
 
-  return usuarioAtualizado
+  return {
+    id: usuarioAtualizado.id,
+    nome: usuarioAtualizado.nome,
+    email: usuarioAtualizado.email
+  }
 }
 
 exports.usuarioConsultar = async (id) => {
@@ -135,5 +149,27 @@ exports.usuarioBalancoCarregar = async (dados) => {
     totalSaldo,
     totalReceitas,
     totalDespesas
+  }
+}
+
+exports.usuarioLogar = async (dados) => {
+  // Verifica existe registro com o mesmo e-mail
+  const registroExistente = await db.Usuario.findOne({ where: { email: dados.email } })
+
+  if (!registroExistente) {
+    throw new APIError(400, 'e-mail não cadastrado.', undefined)
+  }
+
+  // Verifica se a senha está correta
+  const bcrypt = require('bcryptjs')
+
+  if (!bcrypt.compareSync(dados.senha, registroExistente.senha)) {
+    throw new APIError(401, 'Senha incorreta.', undefined)
+  }
+
+  return {
+    id: registroExistente.id,
+    nome: registroExistente.nome,
+    email: registroExistente.email
   }
 }
