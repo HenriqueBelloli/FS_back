@@ -73,3 +73,15 @@ exports.getUsuarioBalance = async (req, res) => {
   const result = await classUsuario.usuarioBalancoCarregar(dados)
   return responses.sendResponse(res, 200, false, 'OK.', result)
 }
+
+exports.postUsuarioLogin = async (req, res) => {
+  const { email, senha } = req.body
+
+  if (!email || !senha) {
+    return responses.sendResponse(res, 400, true, 'Campos obrigatórios não informados.', null)
+  }
+
+  const dados = { email, senha }
+
+  const result = await classUsuario.usuarioLogar(dados)
+  return responses.sendResponse(res, 200, false, 'OK.', result)}
